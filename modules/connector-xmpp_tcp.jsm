@@ -252,8 +252,8 @@ XMPPTCPConnector.prototype.onEvent_streamElement = function(element) {
     }
 };
 
-XMPPTCPConnector.prototype.onEvent_transportConnected = function() {
-    this.setState('connected');
+XMPPTCPConnector.prototype.onEvent_transportConnected = function(connector) {
+    this.setState('connected', connector);
 };
 
 XMPPTCPConnector.prototype.onEvent_transportDisconnected = function() {
@@ -322,7 +322,7 @@ XMPPTCPConnector.prototype.connect = function() {
         onDataAvailable: function(request, context, inputStream, offset, count) {
             if(self._state == 'connecting') {
                 self._socket = socket;
-                self.onEvent_transportConnected();
+                self.onEvent_transportConnected(self);
                 self.onEvent_openedOutgoingStream();
             }
 
